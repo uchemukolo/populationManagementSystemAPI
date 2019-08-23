@@ -3,6 +3,7 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import population from './routes'
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use('/api/v1/', population);
 
 app.get('*', (request, response) => response.status(200).send({
   message: 'Welcome to Population Management API!!!',
