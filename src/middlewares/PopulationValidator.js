@@ -2,24 +2,24 @@ import models from '../models';
 import CustomError from '../helpers/errorHandler';
 
 export default class PopulationValidator {
-  static checkFields(req, res, next) {
-    const { location, malePopulation, femalePopulation } = req.body;
-    console.log(req.body,location, malePopulation, femalePopulation);
+  static checkFields(request, response, next) {
+    const { location, malePopulation, femalePopulation } = request.body;
+    console.log(request.body, location, malePopulation, femalePopulation);
     if (!location || !malePopulation || !femalePopulation) {
-      CustomError.handleError('Invalid Payloads', 400, res);
+      CustomError.handleError('Invalid Payloads', 400, response);
     }
-    else{
+    else {
       next();
     }
 
   }
 
-  static checkParam(req, res, next) {
-    const { locationId } = req.params;
+  static checkParam(request, response, next) {
+    const { locationId } = request.params;
     if (!Number(locationId)) {
-      CustomError.handleError('Invalid location id parameter', 400, res);
+      CustomError.handleError('Invalid location id parameter', 400, response);
     }
-    else{
+    else {
       next();
     }
   }

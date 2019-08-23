@@ -5,11 +5,6 @@ import PopulationValidator from '../middlewares/PopulationValidator';
 const Router = express.Router();
 
 Router.get(
-  '/',
-  PopulationController.home,
-);
-
-Router.get(
   '/locations',
   PopulationController.getLocations,
 );

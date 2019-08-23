@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../index';
+import server from '../app';
 import {
   chad,
   france,
@@ -18,12 +18,12 @@ describe('Population Controller', () => {
     chai.request(server)
       .post('/api/v1/locations')
       .send(chad)
-      .end((err, res) => {
-        id = res.body.location.id;
-        res.should.have.status(201);
-        res.body.should.be.a('object');
-        res.body.should.have.property('success');
-        res.body.should.have.property('location');
+      .end((err, response) => {
+        id = response.body.location.id;
+        response.should.have.status(201);
+        response.body.should.be.a('object');
+        response.body.should.have.property('success');
+        response.body.should.have.property('location');
         done();
       });
   });
@@ -31,57 +31,57 @@ describe('Population Controller', () => {
     chai.request(server)
       .post('/api/v1/locations')
       .send(incompleteData)
-      .end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.have.property('error');
+      .end((err, response) => {
+        response.should.have.status(400);
+        response.body.should.have.property('error');
         done();
       });
   });
-    it('should Update created population', (done) => {
-      chai.request(server)
+  it('should Update created population', (done) => {
+    chai.request(server)
       .put(`/api/v1/locations/${id}`)
       .send(chad)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('success');
-        res.body.should.have.property('location');
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.body.should.be.a('object');
+        response.body.should.have.property('success');
+        response.body.should.have.property('location');
         done();
       });
-    });
+  });
 
-    it('should get all created locations', (done) => {
-      chai.request(server)
+  it('should get all created locations', (done) => {
+    chai.request(server)
       .get('/api/v1/locations')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('success');
-        res.body.should.have.property('locations');
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.body.should.be.a('object');
+        response.body.should.have.property('success');
+        response.body.should.have.property('locations');
         done();
       });
-    });
+  });
 
-    it('should Return 400 for invalid id for deletion', (done) => {
-      chai.request(server)
-        .delete('/api/v1/locations/a')
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('error');
-          done();
-        });
-    });
+  it('should Return 400 for invalid id for deletion', (done) => {
+    chai.request(server)
+      .delete('/api/v1/locations/a')
+      .end((err, response) => {
+        response.should.have.status(400);
+        response.body.should.have.property('error');
+        done();
+      });
+  });
 
-    it('should delte created location', (done) => {
-      chai.request(server)
+  it('should delte created location', (done) => {
+    chai.request(server)
       .delete(`/api/v1/locations/${id}`)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('success');
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.body.should.be.a('object');
+        response.body.should.have.property('success');
         done();
       });
-    });
+  });
 });
 
 
